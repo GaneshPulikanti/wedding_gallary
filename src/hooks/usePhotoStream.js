@@ -26,26 +26,19 @@ export function usePhotoStream({ folderId, apiKey, pollInterval = 7000, forceMoc
       setIsMockMode(result.isMock);
       setApiError(result.error || null);
 
-      if (result.photos && result.photos.length > 0) {
-        if (isInitial || photoIdsSetRef.current.size === 0) {
-          // Initial population
-          setPhotos(result.photos);
-          photoIdsSetRef.current = new Set(result.photos.map(p => p.id));
-        } else {
-          // Calculate diff for new incoming live tethered photos
+      if (result.photos) {
+        // Detect newly arrived photos for toast notification
+        if (!isInitial && photoIdsSetRef.current.size > 0) {
           const incomingNewPhotos = result.photos.filter(p => !photoIdsSetRef.current.has(p.id));
-          
           if (incomingNewPhotos.length > 0) {
             console.log(`📸 Received ${incomingNewPhotos.length} new tethered photo(s)!`);
-            
-            // Add new IDs to set
-            incomingNewPhotos.forEach(p => photoIdsSetRef.current.add(p.id));
-            
-            // Prepend new photos to top of state
-            setPhotos(prev => [...incomingNewPhotos, ...prev]);
             setNewPhotosCount(prev => prev + incomingNewPhotos.length);
           }
         }
+
+        // Set exact live state of photos (reflects additions AND deletions)
+        setPhotos(result.photos);
+        photoIdsSetRef.current = new Set(result.photos.map(p => p.id));
       }
 
       setLastSyncTime(new Date());
