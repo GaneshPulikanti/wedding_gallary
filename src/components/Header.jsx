@@ -16,7 +16,9 @@ export function Header({
 }) {
   const formatTime = (date) => {
     if (!date) return 'Initializing...';
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const d = date instanceof Date ? date : new Date(date);
+    if (isNaN(d.getTime())) return 'Initializing...';
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
