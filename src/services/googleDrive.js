@@ -189,7 +189,9 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
 
     const data = await response.json();
 
-    const formattedPhotos = (data.files || []).map((file) => {
+    const formattedPhotos = (data.files || [])
+      .filter(file => !file.name.toLowerCase().endsWith('.lrf'))
+      .map((file) => {
       const sizeMB = file.size ? (parseInt(file.size, 10) / (1024 * 1024)).toFixed(1) + ' MB' : 'High-Res';
       const width = file.imageMediaMetadata?.width || '';
       const height = file.imageMediaMetadata?.height || '';
