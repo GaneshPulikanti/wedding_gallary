@@ -8,51 +8,7 @@ import { LiveToast } from './components/LiveToast';
 import { Slideshow } from './components/Slideshow';
 import { Heart, Camera, AlertTriangle, Sparkles, ShieldCheck } from 'lucide-react';
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error("Uncaught React Error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="min-h-screen bg-[#0A0A0C] text-[#F3E5AB] flex items-center justify-center p-6 text-center">
-          <div className="max-w-md p-6 rounded-2xl glass-panel border border-[#D4AF37]/30 shadow-2xl">
-            <Heart className="w-12 h-12 text-[#D4AF37] mx-auto mb-4 animate-pulse" />
-            <h2 className="text-xl font-bold text-[#FAF6EE] mb-2">Sri Lakshmi & Sai Teja Wedding Gallery</h2>
-            <p className="text-xs text-[#C5BBAA] mb-4">Connecting to live photo stream...</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0A0A0C] font-bold text-xs hover:brightness-110 cursor-pointer shadow-md"
-            >
-              Refresh Gallery
-            </button>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-export default function AppWrapper() {
-  return (
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  );
-}
-
-function App() {
+export default function App() {
   // Read env config with direct fallbacks for seamless Vercel deployment
   const folderId = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || '1Y6P9FT0w-AbfHYjtz-YCc6srXvKxwG01';
   const apiKey = import.meta.env.VITE_GOOGLE_DEVELOPER_API_KEY || 'AIzaSyC55xpl74MEwotQ3QKFOFHcnxbCXywMrVQ';
@@ -88,16 +44,15 @@ function App() {
   // Extract unique categories
   const categories = useMemo(() => {
     const set = new Set();
-    (photos || []).forEach(p => {
-      if (p && p.category) set.add(p.category);
+    photos.forEach(p => {
+      if (p.category) set.add(p.category);
     });
     return Array.from(set);
   }, [photos]);
 
   // Filtered photos calculation
   const filteredPhotos = useMemo(() => {
-    return (photos || []).filter(p => {
-      if (!p) return false;
+    return photos.filter(p => {
       const matchesCategory = activeFilter === 'all' || p.category === activeFilter;
       const matchesQuery = searchQuery === '' ||
         (p.name && p.name.toLowerCase().includes(searchQuery.toLowerCase())) ||

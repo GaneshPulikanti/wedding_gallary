@@ -119,12 +119,10 @@ export function GalleryGrid({ photos = [], onPhotoClick, isLoading = false }) {
 
                 {/* Top Badge Overlay */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between opacity-95 transition-opacity">
-                  {photo.createdTime && !isNaN(new Date(photo.createdTime).getTime()) && (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider bg-[#0A0A0C]/85 text-[#F3E5AB] backdrop-blur-md border border-[#D4AF37]/30 flex items-center gap-1 shadow-md">
-                      <Clock className="w-3 h-3 text-[#D4AF37]" />
-                      {new Date(photo.createdTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  )}
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider bg-[#0A0A0C]/85 text-[#F3E5AB] backdrop-blur-md border border-[#D4AF37]/30 flex items-center gap-1 shadow-md">
+                    <Clock className="w-3 h-3 text-[#D4AF37]" />
+                    {new Date(photo.createdTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
 
                   {photo.size && (
                     <span className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-[#0A0A0C]/85 text-[#C5BBAA] backdrop-blur-md border border-[#D4AF37]/20 flex items-center gap-1 shadow-md">
