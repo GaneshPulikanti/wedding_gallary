@@ -9,9 +9,9 @@ import { Slideshow } from './components/Slideshow';
 import { Heart, Camera, AlertTriangle, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function App() {
-  // Read env config
-  const folderId = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || '';
-  const apiKey = import.meta.env.VITE_GOOGLE_DEVELOPER_API_KEY || '';
+  // Read env config with direct fallbacks for seamless Vercel deployment
+  const folderId = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || '1Y6P9FT0w-AbfHYjtz-YCc6srXvKxwG01';
+  const apiKey = import.meta.env.VITE_GOOGLE_DEVELOPER_API_KEY || 'AIzaSyC55xpl74MEwotQ3QKFOFHcnxbCXywMrVQ';
   const pollInterval = parseInt(import.meta.env.VITE_POLL_INTERVAL_MS || '7000', 10);
   const forceMock = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
