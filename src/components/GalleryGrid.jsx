@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, Maximize2, Sparkles, Clock, HardDrive, Check } from 'lucide-react';
+import { Download, Maximize2, Sparkles, Clock, HardDrive, Check, Play } from 'lucide-react';
 
 export function GalleryGrid({ photos = [], onPhotoClick, isLoading = false }) {
   const [downloadingId, setDownloadingId] = useState(null);
