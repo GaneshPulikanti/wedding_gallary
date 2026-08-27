@@ -108,6 +108,15 @@ export function GalleryGrid({ photos = [], onPhotoClick, isLoading = false }) {
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 opacity-100"
                 />
 
+                {/* Video Play Button Overlay */}
+                {photo.isVideo && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-12 h-12 rounded-full bg-[#0A0A0C]/75 backdrop-blur-md border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-xl group-hover:scale-110 transition-transform">
+                      <Play className="w-6 h-6 fill-[#D4AF37] ml-0.5" />
+                    </div>
+                  </div>
+                )}
+
                 {/* Top Badge Overlay */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between opacity-95 transition-opacity">
                   <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider bg-[#0A0A0C]/85 text-[#F3E5AB] backdrop-blur-md border border-[#D4AF37]/30 flex items-center gap-1 shadow-md">

@@ -170,19 +170,29 @@ export function LightboxModal({
         </button>
       )}
 
-      {/* Central High-Res Photo Container */}
+      {/* Central High-Res Photo / Video Container */}
       <div className="relative max-w-6xl max-h-[80vh] w-full px-4 flex items-center justify-center overflow-auto">
-        <img
-          src={photo.fullUrl || photo.thumbnailUrl}
-          alt={photo.caption || photo.name}
-          onError={(e) => {
-            if (e.target.src !== photo.thumbnailUrl && photo.thumbnailUrl) {
-              e.target.src = photo.thumbnailUrl;
-            }
-          }}
-          style={{ transform: `scale(${zoomLevel})` }}
-          className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-[#D4AF37]/30 transition-transform duration-300"
-        />
+        {photo.isVideo ? (
+          <video
+            src={photo.fullUrl || photo.downloadUrl}
+            controls
+            autoPlay
+            playsInline
+            className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-[#D4AF37]/30"
+          />
+        ) : (
+          <img
+            src={photo.fullUrl || photo.thumbnailUrl}
+            alt={photo.caption || photo.name}
+            onError={(e) => {
+              if (e.target.src !== photo.thumbnailUrl && photo.thumbnailUrl) {
+                e.target.src = photo.thumbnailUrl;
+              }
+            }}
+            style={{ transform: `scale(${zoomLevel})` }}
+            className="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl border border-[#D4AF37]/30 transition-transform duration-300"
+          />
+        )}
       </div>
 
       {/* Bottom Bar Controls & High-Res Save Button */}

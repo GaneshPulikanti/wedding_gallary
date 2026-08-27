@@ -167,7 +167,7 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
   }
 
   try {
-    const query = `'${cleanFolderId}' in parents and mimeType contains 'image/' and trashed = false`;
+    const query = `'${cleanFolderId}' in parents and (mimeType contains 'image/' or mimeType contains 'video/') and trashed = false`;
     const fields = 'files(id, name, mimeType, thumbnailLink, webContentLink, webViewLink, createdTime, size, imageMediaMetadata)';
     const orderBy = 'createdTime desc';
     const pageSize = 100;
@@ -194,14 +194,15 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
       const width = file.imageMediaMetadata?.width || '';
       const height = file.imageMediaMetadata?.height || '';
       const dimensions = width && height ? `${width} x ${height}` : 'Original';
+      const isVideo = (file.mimeType && file.mimeType.includes('video')) || file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.mov');
 
       const cdnThumb = file.thumbnailLink
         ? file.thumbnailLink.replace(/=s\d+$/, '=s1000')
         : `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
 
-      const cdnFull = file.thumbnailLink
-        ? file.thumbnailLink.replace(/=s\d+$/, '=s2500')
-        : `https://drive.google.com/uc?export=view&id=${file.id}`;
+      const cdnFull = isVideo
+        ? (file.webContentLink || `https://drive.google.com/uc?export=download&id=${file.id}`)
+        : (file.thumbnailLink ? file.thumbnailLink.replace(/=s\d+$/, '=s2500') : `https://drive.google.com/uc?export=view&id=${file.id}`);
 
       return {
         id: file.id,
@@ -212,7 +213,9 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
         downloadUrl: getDriveDownloadUrl(file),
         size: sizeMB,
         dimensions: dimensions,
-        category: 'Camera Tether',
+        isVideo: isVideo,
+        mediaType: isVideo ? 'video' : 'image',
+        category: isVideo ? 'Video Clip' : 'Camera Tether',
         caption: file.name.replace(/\.[^/.]+$/, "")
       };
     });
