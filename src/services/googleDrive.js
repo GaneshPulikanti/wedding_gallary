@@ -145,9 +145,9 @@ export function processDriveThumbnail(file) {
  * Constructs direct high-resolution download URL for Google Drive file
  */
 export function getDriveDownloadUrl(file) {
-  if (file.fullUrl) return file.fullUrl; // Mock fallback
   if (file.webContentLink) return file.webContentLink;
-  return `https://drive.google.com/uc?export=download&id=${file.id}`;
+  if (file.id) return `https://drive.google.com/uc?export=download&id=${file.id}`;
+  return file.fullUrl || '';
 }
 
 /**

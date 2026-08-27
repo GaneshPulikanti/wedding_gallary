@@ -15,8 +15,8 @@ export function GalleryGrid({ photos = [], onPhotoClick, isLoading = false }) {
     setDownloadingId(photo.id);
 
     try {
-      // Trigger file download helper
-      const response = await fetch(photo.fullUrl);
+      const targetUrl = photo.downloadUrl || photo.fullUrl;
+      const response = await fetch(targetUrl);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       
@@ -33,7 +33,7 @@ export function GalleryGrid({ photos = [], onPhotoClick, isLoading = false }) {
     } catch (err) {
       console.warn('Direct blob download fallback to window location:', err);
       // Fallback open target in new tab
-      window.open(photo.fullUrl, '_blank');
+      window.open(photo.downloadUrl || photo.fullUrl, '_blank');
     } finally {
       setDownloadingId(null);
     }
