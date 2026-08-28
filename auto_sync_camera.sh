@@ -12,9 +12,13 @@ echo "Target Cloud Folder: $DRIVE_DIR"
 echo "Watching for new photos & videos from connected camera..."
 echo "=========================================================="
 
+
+
+
+
 while true; do
-  # Find ONLY photo files (.JPG, .PNG, .JPEG) across all mounted camera volumes/DCIM
-  for file in /Volumes/*/DCIM/*/*.JPG /Volumes/*/DCIM/*/*.jpg /Volumes/*/DCIM/*/*.PNG /Volumes/*/DCIM/*/*.png /Volumes/*/DCIM/*/*.JPEG /Volumes/*/DCIM/*/*.jpeg /Volumes/*/*.JPG /Volumes/*/*.jpg /Volumes/*/*.PNG /Volumes/*/*.png; do
+  # Find all JPG, PNG, MP4, MOV files across all mounted camera volumes/DCIM
+  for file in /Volumes/*/DCIM/*/* /Volumes/*/*.JPG /Volumes/*/*.jpg /Volumes/*/*.MP4 /Volumes/*/*.mp4 /Volumes/*/*.MOV /Volumes/*/*.mov; do
     if [ -f "$file" ]; then
       filename=$(basename "$file")
       # Check if file has not been synced yet
