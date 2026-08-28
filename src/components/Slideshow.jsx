@@ -29,7 +29,7 @@ export function Slideshow({ photos = [], onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#0A0A0C] flex flex-col justify-between p-4 sm:p-8 animate-fadeIn">
-      
+
       {/* Header */}
       <div className="flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
@@ -38,7 +38,7 @@ export function Slideshow({ photos = [], onClose }) {
           </div>
           <div>
             <h2 className="text-lg font-serif-luxury font-bold text-[#FAF6EE]">Sri Lakshmi & Sai Teja</h2>
-            <p className="text-xs text-[#D4AF37]">Live Reception Presentation Mode</p>
+            <p className="text-xs text-[#D4AF37]">Live Wedding Presentation Mode</p>
           </div>
         </div>
 
