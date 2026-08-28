@@ -130,13 +130,13 @@ let localMockState = [...MOCK_WEDDING_PHOTOS];
 export function processDriveThumbnail(file) {
   if (!file) return '';
   if (typeof file === 'string') {
-    return file.replace(/=s\d+/, '=w1200').replace(/=w\d+-h\d+/, '=w1200');
+    return file.replace(/=s\d+/, '=w500').replace(/=w\d+-h\d+/, '=w500');
   }
   if (file.id) {
-    return `https://drive.google.com/thumbnail?id=${file.id}&sz=w1200`;
+    return `https://drive.google.com/thumbnail?id=${file.id}&sz=w500`;
   }
   if (file.thumbnailLink) {
-    return file.thumbnailLink.replace(/=s\d+/, '=w1200').replace(/=w\d+-h\d+/, '=w1200');
+    return file.thumbnailLink.replace(/=s\d+/, '=w500').replace(/=w\d+-h\d+/, '=w500');
   }
   return '';
 }
@@ -199,12 +199,12 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
       const isVideo = (file.mimeType && file.mimeType.includes('video')) || file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.mov');
 
       const cdnThumb = file.thumbnailLink
-        ? file.thumbnailLink.replace(/=s\d+$/, '=s1000')
-        : `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
+        ? file.thumbnailLink.replace(/=s\d+$/, '=w500')
+        : `https://drive.google.com/thumbnail?id=${file.id}&sz=w500`;
 
       const cdnFull = isVideo
         ? (file.webContentLink || `https://drive.google.com/uc?export=download&id=${file.id}`)
-        : (file.thumbnailLink ? file.thumbnailLink.replace(/=s\d+$/, '=s2500') : `https://drive.google.com/uc?export=view&id=${file.id}`);
+        : (file.thumbnailLink ? file.thumbnailLink.replace(/=s\d+$/, '=s2000') : `https://drive.google.com/uc?export=view&id=${file.id}`);
 
       return {
         id: file.id,
