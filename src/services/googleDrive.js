@@ -168,9 +168,9 @@ export async function fetchDrivePhotos({ folderId, apiKey, useMock = false }) {
 
   try {
     const query = `'${cleanFolderId}' in parents and (mimeType contains 'image/' or mimeType contains 'video/') and trashed = false`;
-    const fields = 'files(id, name, mimeType, thumbnailLink, webContentLink, webViewLink, createdTime, size, imageMediaMetadata)';
+    const fields = 'nextPageToken, files(id, name, mimeType, thumbnailLink, webContentLink, webViewLink, createdTime, size, imageMediaMetadata)';
     const orderBy = 'createdTime desc';
-    const pageSize = 100;
+    const pageSize = 1000;
 
     const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&orderBy=${encodeURIComponent(orderBy)}&pageSize=${pageSize}&key=${apiKey}`;
 
